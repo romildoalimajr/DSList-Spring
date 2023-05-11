@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import net.kalangos.dslist.dto.GameDTO;
 import net.kalangos.dslist.dto.GameMinDTO;
 import net.kalangos.dslist.entities.Game;
+import net.kalangos.dslist.projections.GameMinProjection;
 import net.kalangos.dslist.repositories.GameRepository;
 
 @Service
@@ -31,5 +32,14 @@ public class GameService {
 		List<GameMinDTO> dto = result.stream().map(x -> new GameMinDTO(x)).toList();
 		return dto;
 		
+	}@Transactional(readOnly = true)
+	public List<GameMinDTO> findByList(Long listId){
+	
+		List<GameMinProjection> result = gameRepository.searchByList(listId);
+		List<GameMinDTO> dto = result.stream().map(x -> new GameMinDTO(x)).toList();
+		return dto;
+		
 	}
+	
+	
 }
